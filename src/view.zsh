@@ -11,7 +11,7 @@ view.render() {
     local -A vars=($*[2,-1])
     IFS_bak=$IFS
     IFS="\n"
-    while {read -n line} {
+    while {read line} {
         for k v (${(kv)vars}) {
             line=(${line//"{{$k}}"/$v})
         }
@@ -20,11 +20,3 @@ view.render() {
     IFS=$IFS_bak
 }
 
-view.write() {
-    local target=$1
-    local content=$2
-    >$target < /dev/null
-    for line (${(f)content}) {
-        echo $line >>$target
-    }
-}
