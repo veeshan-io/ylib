@@ -1,20 +1,23 @@
 view.render() {
     if [[ ! -e $1 ]] {
         echo "Template $1 is not exists."
-        exit
+        return 1
     }
     if [[ -d $1 ]] {
         echo "Template $1 must be a file."
-        exit
+        return 1
     }
 
     local -A vars=($*[2,-1])
-    while {read line} {
+    IFS_bak=$IFS
+    IFS="\n"
+    while {read -n line} {
         for k v (${(kv)vars}) {
             line=(${line//"{{$k}}"/$v})
         }
         echo $line
     } <$1
+    IFS=$IFS_bak
 }
 
 view.write() {
