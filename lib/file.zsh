@@ -40,3 +40,9 @@ file.write() {
 file.backup() {
     [[ ! -e $1.bak ]] && cp $1 $1.bak
 }
+
+file.per_line() {
+    while {read line} {
+        echo $line
+    } <$1
+}
