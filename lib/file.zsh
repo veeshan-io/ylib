@@ -42,7 +42,10 @@ file.backup() {
 }
 
 file.per_line() {
+    IFS_bak=$IFS
+    IFS="\n"
     while {read line} {
         echo $line
     } <$1
+    IFS=$IFS_bak
 }
